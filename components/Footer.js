@@ -1,11 +1,15 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 const Footer = () => {
   return (
     <View style={styles.footerStyle}>
-      <Text>Sort</Text>
-      <Text>Filter</Text>
+      <TouchableOpacity style={styles.buttonStyle}>
+        <Text style={styles.text}>Sort</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.buttonStyle}>
+        <Text style={styles.text}>Filter</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -14,7 +18,25 @@ export default Footer;
 
 const styles = StyleSheet.create({
   footerStyle: {
+    width: '100%',
+    height: 60,
     backgroundColor: '#191919',
-    justifyContent: 'space-between',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+  },
+  buttonStyle: {
+    width: '50%',
+    height: 60,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  text: {
+    fontSize: 20,
+    fontFamily: 'OpenSans-Medium',
   },
 });

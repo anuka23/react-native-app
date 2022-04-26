@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+
 import React from 'react';
 import arrow from '../Image/down-arrow.png';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,13 +15,9 @@ import LinearGradient from 'react-native-linear-gradient';
 const Header = () => {
   return (
     <View style={styles.headerStyle}>
-      <Text style={styles.title}>Search</Text>
-      <Text style={styles.cityContainer}>EarnaKulam</Text>
       <View style={styles.searchContainer}>
         <TextInput style={styles.input} placeholder="Search" />
       </View>
-      <TouchableOpacity style={styles.tagContainer}>Business</TouchableOpacity>
-      <TouchableOpacity style={styles.tagContainer}>Deals</TouchableOpacity>
     </View>
   );
 };
@@ -34,13 +31,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    marginBottom: 10,
-    fontSize: 22,
-  },
-  cityContainer: {
-    fontSize: 22,
-  },
 
   searchContainer: {
     backgroundColor: 'transparent',
@@ -53,14 +43,5 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingHorizontal: 30,
-  },
-  tagContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    margin: 10,
-    borderRadius: 40,
-    backgroundColor: 'transparent',
   },
 });
