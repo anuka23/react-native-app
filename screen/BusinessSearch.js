@@ -11,11 +11,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Button from '../components/Button';
 import axios from 'axios';
-import CitySearch from './CitySearch';
+import cover from '../Image/cover.jpg';
+import LinearGradient from 'react-native-linear-gradient';
 
-const BusinessSearch = () => {
+const BusinessSearch = ({navigation}) => {
   const [businesses, setBusinesses] = useState([]);
-  const [cityOpen, setCityOpen] = useState(false);
 
   const getBusiness = () => {
     axios
@@ -31,56 +31,63 @@ const BusinessSearch = () => {
 
   return (
     <View style={styles.businessStyle}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.title}>Search</Text>
-        <TouchableOpacity
-          style={styles.cityContainer}
-          cityOpen={cityOpen}
-          onPress={() => setCityOpen(!cityOpen)}>
-          <Text style={styles.cityName}> EarnaKulam</Text>
-          {cityOpen && (
-            <CitySearch cityOpen={cityOpen} setCityOpen={setCityOpen} />
-          )}
-        </TouchableOpacity>
-      </View>
-      <Header />
-      <Button />
-      <View style={styles.businessListContainer}>
-        <FlatList
-          style={styles.listStyle}
-          data={businesses}
-          renderItem={({item}) => (
-            <View style={styles.businessListItems}>
-              <View style={styles.businessList}>
-                <Image
-                  source={{
-                    uri:
-                      'https://staging.admin.haavoo.com/app-images/' +
-                      item?.medias[0]?.path,
-                  }}
-                  style={styles.businessImage}
-                />
+      <Image
+        style={StyleSheet.absoluteFillObject}
+        source={cover}
+        resizeMode="cover"
+      />
+      <LinearGradient
+        colors={['#680101e8', '#000000c2', '#000000', '#000000']}
+        start={{x: 0.5, y: 0}}
+        style={styles.linearGradient}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>Search</Text>
+          <TouchableOpacity
+            style={styles.cityContainer}
+            onPress={() => navigation.navigate('CitySearch')}>
+            <Text style={styles.cityName}> EarnaKulam</Text>
+          </TouchableOpacity>
+        </View>
+        <Header />
+        <Button />
+        <View style={styles.businessListContainer}>
+          <FlatList
+            style={styles.listStyle}
+            data={businesses}
+            renderItem={({item}) => (
+              <View style={styles.businessListItems}>
+                <View style={styles.businessList}>
+                  <Image
+                    source={{
+                      uri:
+                        'https://staging.admin.haavoo.com/app-images/' +
+                        item?.medias[0]?.path,
+                    }}
+                    style={styles.businessImage}
+                  />
+                </View>
+                <View style={styles.businessInfo}>
+                  <Text style={styles.businessInfoTitle}>
+                    {item?.business_name}
+                  </Text>
+                  <Text style={styles.businessInfoCategory}>
+                    Category : {item?.categories[0]?.name}
+                  </Text>
+                  <Text style={styles.businessInfoArea}>
+                    Area : {item?.areas[0]?.name}
+                  </Text>
+
+                  <Text style={styles.businessInfoDesc}>
+                    {/* {item?.description} */}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.businessInfo}>
-                <Text style={styles.businessInfoTitle}>
-                  {item?.business_name}
-                </Text>
-                <Text style={styles.businessInfoCategory}>
-                  Category : {item?.categories[0]?.name}
-                </Text>
-                <Text style={styles.businessInfoArea}>
-                  Area : {item?.areas[0]?.name}
-                </Text>
-                <Text style={styles.businessInfoDesc}>
-                  {/* {item?.description} */}
-                </Text>
-              </View>
-            </View>
-          )}
-          keyExtractor={item => item.id}
-        />
-      </View>
-      <Footer />
+            )}
+            keyExtractor={item => item.id}
+          />
+        </View>
+        <Footer />
+      </LinearGradient>
     </View>
   );
 };
@@ -95,8 +102,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     fontFamily: 'OpenSans-Regular',
+    zIndex: 1,
+    position: 'relative',
   },
 
+  coverImage: {
+    height: 600,
+    justifyContent: 'center',
+  },
+
+  linearGradient: {
+    width: '100%',
+    height: '100%',
+  },
   headerContainer: {
     marginTop: 10,
     display: 'flex',
@@ -106,10 +124,12 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 10,
     fontSize: 22,
+    color: '#fff',
     fontFamily: 'OpenSans-Regular',
   },
   cityName: {
     fontSize: 22,
+    color: '#fff',
     fontFamily: 'OpenSans-Regular',
   },
   components: {
@@ -135,8 +155,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginVertical: 8,
-    backgroundColor: '#242526',
-    opacity: 0.7,
+    backgroundColor: '#61606047',
     borderRadius: 15,
     borderWidth: 1,
     borderColor: 'grey',
@@ -148,21 +167,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   businessInfo: {
-    height: 'auto',
+    height: 100,
     width: '50%',
     marginHorizontal: 12,
   },
   businessInfoTitle: {
     color: '#fff',
     fontFamily: 'OpenSans-Medium',
-    flexShrink: 1,
   },
   businessInfoCategory: {
     fontFamily: 'OpenSans-Medium',
-    flexShrink: 1,
+    fontSize: 12,
   },
   businessInfoArea: {
     fontFamily: 'OpenSans-Medium',
-    flexShrink: 1,
+    fontSize: 12,
   },
 });

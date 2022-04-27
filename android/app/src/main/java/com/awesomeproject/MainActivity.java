@@ -3,6 +3,7 @@ package com.awesomeproject;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import android.os.Bundle;
 
 
 public class MainActivity extends ReactActivity {
@@ -12,6 +13,10 @@ public class MainActivity extends ReactActivity {
    * rendering of the component.
    */
 
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(null);
+}
 
   @Override
   protected String getMainComponentName() {

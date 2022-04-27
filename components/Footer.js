@@ -1,13 +1,17 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 const Footer = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.footerStyle}>
       <TouchableOpacity style={styles.buttonStyle}>
         <Text style={styles.text}>Sort</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonStyle}>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={() => navigation.navigate('Filter')}>
         <Text style={styles.text}>Filter</Text>
       </TouchableOpacity>
     </View>

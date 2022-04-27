@@ -5,7 +5,7 @@ const Button = () => {
   return (
     <View style={styles.tagContainer}>
       <TouchableOpacity style={styles.nameTagContainer}>
-        <Text style={styles.text}>Businesses</Text>
+        <Text style={styles.businessText}>Businesses</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.dealsTagContainer}>
         <Text style={styles.text}>Deals</Text>
@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  businessText: {
+    color: '#fff',
+    fontSize: 22,
+    fontFamily: 'OpenSans-Medium',
   },
   text: {
     color: '#000',
