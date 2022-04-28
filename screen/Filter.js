@@ -14,8 +14,8 @@ import Areas from '../components/Areas';
 import {useNavigation} from '@react-navigation/native';
 import ApplyButton from '../components/ApplyButton';
 
-const Filter = () => {
-  const navigation = useNavigation();
+const Filter = ({navigation}) => {
+  // const navigation = useNavigation();
   return (
     <View style={styles.filterContainer}>
       <Image

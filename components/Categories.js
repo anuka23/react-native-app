@@ -21,7 +21,9 @@ const Categories = () => {
       });
   };
 
-  useEffect(() => getCategory(), []);
+  useEffect(() => {
+    getCategory();
+  });
 
   return (
     <View style={styles.categoryContainer}>

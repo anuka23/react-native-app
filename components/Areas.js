@@ -20,7 +20,9 @@ const Areas = () => {
       });
   };
 
-  useEffect(() => getAreas(), [areas]);
+  useEffect(() => {
+    getAreas();
+  }, []);
   return (
     <View style={styles.areaContainer}>
       <Text style={styles.areaTitle}>Area</Text>

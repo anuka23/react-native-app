@@ -12,10 +12,14 @@ import axios from 'axios';
 import cover from '../Image/cover.jpg';
 import LinearGradient from 'react-native-linear-gradient';
 
-const CitySearch = ({navigation}) => {
+const CitySearch = ({navigation, searchUpdatedCity}) => {
   const [cities, setCities] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [filteredResults, setFilteredResults] = useState([]);
+
+  const searchCity = value => {
+    searchUpdatedCity(value);
+  };
 
   const citySearch = searchValue => {
     setSearchInput(searchValue);
@@ -83,7 +87,8 @@ const CitySearch = ({navigation}) => {
                       {item.is_popular == 1 && (
                         <TouchableOpacity
                           style={styles.popularCityListItem}
-                          onPress={() => navigation.goBack()}>
+                          onPress={() => navigation.goBack()}
+                          onClick={() => searchCity(city.slug)}>
                           <Image
                             style={styles.cityImage}
                             source={{
@@ -104,7 +109,8 @@ const CitySearch = ({navigation}) => {
                       {item.is_popular == 1 && (
                         <TouchableOpacity
                           style={styles.popularCityListItem}
-                          onPress={() => navigation.goBack()}>
+                          onPress={() => navigation.goBack()}
+                          onClick={() => searchCity(city.slug)}>
                           <Image
                             style={styles.cityImage}
                             source={{
