@@ -15,6 +15,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Filter from './screen/Filter';
 import {StoreProvider} from 'easy-peasy';
 import store from './Store/store';
+import Header from './components/Header';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -24,7 +25,7 @@ const App = () => {
         <Stack.Navigator>
           <Stack.Screen
             options={{headerShown: false}}
-            name="Search"
+            name="BusinessSearch"
             component={BusinessSearch}
           />
           <Stack.Screen
@@ -37,7 +38,6 @@ const App = () => {
             name="Filter"
             component={Filter}
           />
-          {/* <Stack.Screen name="Footer" component={Footer} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </StoreProvider>

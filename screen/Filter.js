@@ -11,11 +11,12 @@ import cover from '../Image/cover.jpg';
 import LinearGradient from 'react-native-linear-gradient';
 import Categories from '../components/Categories';
 import Areas from '../components/Areas';
-import {useNavigation} from '@react-navigation/native';
 import ApplyButton from '../components/ApplyButton';
 
 const Filter = ({navigation}) => {
-  // const navigation = useNavigation();
+  const searchCategories = value => {
+    setSearchCategories(value);
+  };
   return (
     <View style={styles.filterContainer}>
       <Image

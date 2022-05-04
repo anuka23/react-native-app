@@ -12,14 +12,10 @@ import axios from 'axios';
 import cover from '../Image/cover.jpg';
 import LinearGradient from 'react-native-linear-gradient';
 
-const CitySearch = ({navigation, searchUpdatedCity}) => {
+const CitySearch = ({navigation, route}) => {
   const [cities, setCities] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [filteredResults, setFilteredResults] = useState([]);
-
-  const searchCity = value => {
-    searchUpdatedCity(value);
-  };
 
   const citySearch = searchValue => {
     setSearchInput(searchValue);
@@ -48,7 +44,18 @@ const CitySearch = ({navigation, searchUpdatedCity}) => {
       });
   };
 
-  useEffect(() => getCity(), [cities]);
+  useEffect(() => getCity(), []);
+
+  const onPressCity = value => {
+    navigation.goBack();
+
+    route.params.searchUpdatedCity(value);
+    console.log('cityName', value);
+  };
+
+  const onPressCityName = value => {
+    navigation.navigate('BusinessSearch', {cityName: value});
+  };
 
   return (
     <View style={styles.citySearchContainer}>
@@ -87,8 +94,11 @@ const CitySearch = ({navigation, searchUpdatedCity}) => {
                       {item.is_popular == 1 && (
                         <TouchableOpacity
                           style={styles.popularCityListItem}
-                          onPress={() => navigation.goBack()}
-                          onClick={() => searchCity(city.slug)}>
+                          onPress={() => {
+                            onPressCity(item.slug);
+                            onPressCityName(item.name);
+                          }}>
+                          {console.log('itme Slug', item.slug)}
                           <Image
                             style={styles.cityImage}
                             source={{
@@ -109,8 +119,10 @@ const CitySearch = ({navigation, searchUpdatedCity}) => {
                       {item.is_popular == 1 && (
                         <TouchableOpacity
                           style={styles.popularCityListItem}
-                          onPress={() => navigation.goBack()}
-                          onClick={() => searchCity(city.slug)}>
+                          onPress={() => {
+                            onPressCity(item.slug);
+                            onPressCityName(item.name);
+                          }}>
                           <Image
                             style={styles.cityImage}
                             source={{
@@ -137,7 +149,7 @@ const CitySearch = ({navigation, searchUpdatedCity}) => {
                     {item.is_popular == 0 && (
                       <TouchableOpacity
                         style={styles.OtherCityListItem}
-                        onPress={() => navigation.goBack()}>
+                        onPress={() => onPressCity(item.slug)}>
                         <Text style={styles.otherCityName}>{item.name}</Text>
                       </TouchableOpacity>
                     )}

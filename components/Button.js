@@ -1,13 +1,21 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
+import BusinessList from './BusinessList';
+import Deals from './Deals';
 
 const Button = () => {
+  const pressBusiness = () => {
+    return <BusinessList />;
+  };
+  const pressDeals = () => {
+    return <Deals />;
+  };
   return (
     <View style={styles.tagContainer}>
-      <TouchableOpacity style={styles.nameTagContainer}>
+      <TouchableOpacity style={styles.nameTagContainer} onPress={pressBusiness}>
         <Text style={styles.businessText}>Businesses</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.dealsTagContainer}>
+      <TouchableOpacity style={styles.dealsTagContainer} onPress={pressDeals}>
         <Text style={styles.text}>Deals</Text>
       </TouchableOpacity>
     </View>

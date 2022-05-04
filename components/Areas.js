@@ -30,14 +30,14 @@ const Areas = () => {
         {areas &&
           areas.length > 0 &&
           areas.map(item => (
-            <View style={styles.areaListItem} key={item.id}>
+            <TouchableOpacity style={styles.areaListItem} key={item.id}>
               <CheckBox
                 disabled={false}
                 value={toggleCheckBox}
                 onValueChange={newValue => setToggleCheckBox(newValue)}
               />
               <Text style={styles.listItem}>{item.name}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
       </View>
     </View>

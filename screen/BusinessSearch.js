@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useStoreActions} from 'easy-peasy';
 import {
   StyleSheet,
   Text,
@@ -14,16 +15,15 @@ import arrow from '../Image/down-arrow.png';
 import cover from '../Image/cover.jpg';
 import LinearGradient from 'react-native-linear-gradient';
 import BusinessList from '../components/BusinessList';
+import Deals from '../components/Deals';
+import {useIsFocused} from '@react-navigation/native';
 
-const BusinessSearch = ({navigation}) => {
+const BusinessSearch = ({navigation, route}) => {
+  const [show, setShow] = useState(true);
+
   const [updatedValue, setUpdatedValue] = useState([
     {
-      categories: [''],
-      areas: [''],
-      sort: [''],
       search_query: '',
-      type: [''],
-      page: [],
       city: '',
     },
   ]);
@@ -40,6 +40,8 @@ const BusinessSearch = ({navigation}) => {
     setUpdatedValue(updatedValueNew);
   };
 
+  console.log('updated value', updatedValue);
+
   return (
     <View style={styles.businessStyle}>
       <Image
@@ -55,15 +57,33 @@ const BusinessSearch = ({navigation}) => {
           <Text style={styles.title}>Search</Text>
           <TouchableOpacity
             style={styles.cityContainer}
-            onPress={() => navigation.navigate('CitySearch')}
-            searchUpdatedCity={searchUpdatedCity}>
-            <Text style={styles.cityName}> EarnaKulam</Text>
+            onPress={() =>
+              navigation.navigate('CitySearch', {
+                searchUpdatedCity: searchUpdatedCity,
+              })
+            }>
+            <Text style={styles.cityName}>{route.params?.cityName}</Text>
             <Image style={styles.arrowIcon} source={arrow} />
           </TouchableOpacity>
         </View>
         <Header searchUpdatedInput={searchUpdatedInput} />
-        <Button />
-        <BusinessList updatedValue={updatedValue} />
+        <View style={styles.tagContainer}>
+          <TouchableOpacity
+            style={styles.nameTagContainer}
+            onPress={() => setShow(true)}>
+            <Text style={styles.businessText}>Businesses</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.dealsTagContainer}
+            onPress={() => setShow(false)}>
+            <Text style={styles.text}>Deals</Text>
+          </TouchableOpacity>
+        </View>
+        {show ? (
+          <BusinessList updatedValue={updatedValue} />
+        ) : (
+          <Deals updatedValue={updatedValue} />
+        )}
         <Footer />
       </LinearGradient>
     </View>
@@ -120,5 +140,42 @@ const styles = StyleSheet.create({
   },
   components: {
     height: '100%',
+  },
+  tagContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nameTagContainer: {
+    width: 156,
+    height: 50,
+    margin: 5,
+    borderRadius: 30,
+    backgroundColor: '#ff9000',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dealsTagContainer: {
+    width: 156,
+    height: 50,
+    margin: 5,
+    borderRadius: 30,
+    backgroundColor: '#fff',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  businessText: {
+    color: '#fff',
+    fontSize: 22,
+    fontFamily: 'OpenSans-Medium',
+  },
+  text: {
+    color: '#000',
+    fontSize: 22,
+    fontFamily: 'OpenSans-Medium',
   },
 });

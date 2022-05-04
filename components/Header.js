@@ -7,34 +7,31 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import search from '../Image/search.png';
-import React from 'react';
+import searchIcon from '../Image/search.png';
+import React, {useState} from 'react';
 
 const Header = ({searchUpdatedInput}) => {
-  var searchValue;
-
-  const setSearch = value => {
-    searchValue = value;
-  };
+  const [search, setSearch] = useState('');
 
   const searchBuisnesses = () => {
-    searchUpdatedInput(searchValue);
+    searchUpdatedInput(search);
   };
+
+  console.log('searchValue', search);
   return (
     <View style={styles.headerStyle}>
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}
           placeholder="Search"
-          onChange={e => {
-            setSearch(e.target.value);
-          }}
+          onChangeText={text => setSearch(text)}
+          value={search}
         />
         <TouchableOpacity
           onPress={() => {
             searchBuisnesses();
           }}>
-          <Image style={styles.searchIcon} source={search} />
+          <Image style={styles.searchIcon} source={searchIcon} />
         </TouchableOpacity>
       </View>
     </View>
@@ -64,7 +61,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   input: {
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
+    width: '80%',
   },
   searchIcon: {
     height: 35,

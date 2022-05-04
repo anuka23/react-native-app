@@ -10,6 +10,8 @@ const BusinessList = ({updatedValue}) => {
     fetchBusinesses(updatedValue);
   }, [updatedValue]);
 
+  console.log('businesslist', updatedValue);
+
   return (
     <View style={styles.businessListContainer}>
       <FlatList
