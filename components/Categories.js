@@ -12,8 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
 import arrow from '../Image/down-arrow.png';
 
-const Categories = () => {
-  const navigation = useNavigation();
+const Categories = ({searchUpdatedCategories}) => {
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
 
@@ -33,12 +32,16 @@ const Categories = () => {
     getCategory();
   }, []);
 
-  // const onChecked = id => {
-  //   const data = isChecked;
-  //   const index = data.fetchIndex(x => x.id == id);
-  //   data[index].checked = !data[index].checked;
-  //   setIsChecked(data);
-  // };
+  const onChecked = id => {
+    let temp = categories.map(product => {
+      if (id === product.id) {
+        return {...product, isChecked: !product.isChecked};
+      }
+      return product;
+    });
+    setCategories(temp);
+    console.log('temp', temp);
+  };
 
   const searchCategories = value => {
     const currentValue = checked.indexOf(value);
@@ -50,19 +53,27 @@ const Categories = () => {
       newValue.push(value);
     }
     setChecked(newValue);
-    // searchUpdatedCategories(newValue);
+    searchUpdatedCategories(newValue);
   };
+
+  console.log('categories', checked);
 
   return (
     <View style={styles.categoryContainer}>
       <Text style={styles.categoryTitle}>Categories</Text>
       <View style={styles.categoryListContainer}>
         {categories &&
-          categories.map((item, id) => {
+          categories.map(item => {
             return (
-              <TouchableOpacity style={styles.categoryListItem} key={id}>
+              <TouchableOpacity style={styles.categoryListItem} key={item.id}>
                 <View style={styles.checkboxStyle}>
-                  <CheckBox onValueChange={searchCategories} />
+                  <CheckBox
+                    value={item.isChecked}
+                    onChange={() => {
+                      onChecked(item.id);
+                      searchCategories(item.slug);
+                    }}
+                  />
                   <Text style={styles.listItem}>{item.name}</Text>
                 </View>
                 <View style={styles.image}>

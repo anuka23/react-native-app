@@ -11,12 +11,36 @@ import {useNavigation} from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
 import close from '../Image/close.png';
 
-const Footer = () => {
+const Footer = ({sort, updatedCategories, updatedAreas}) => {
   const [modal, setModal] = useState(false);
   const [referenceCheckBox, setReferenceCheckBox] = useState(false);
   const [popularityCheckBox, setPopularityCheckBox] = useState(false);
   const [distanceCheckBox, setDistanceCheckBox] = useState(false);
+  const [checked, setChecked] = useState([]);
   const navigation = useNavigation();
+
+  const setSearchCategories = value => {
+    updatedCategories(value);
+  };
+
+  const setSearchAreas = value => {
+    updatedAreas(value);
+  };
+
+  const onPressCheckbox = value => {
+    const currentValue = checked.indexOf(value);
+    const newValue = [...checked];
+
+    if (checked.includes(value)) {
+      newValue.splice(currentValue, 1);
+    } else {
+      newValue.push(value);
+    }
+    setChecked(newValue);
+    sort(newValue);
+    setModal(false);
+  };
+
   return (
     <View style={styles.footerStyle}>
       <Modal animationType="slide" transparent={true} visible={modal}>
@@ -28,21 +52,30 @@ const Footer = () => {
             <Text style={styles.text}>Reference</Text>
             <CheckBox
               value={referenceCheckBox}
-              onValueChange={setReferenceCheckBox}
+              onValueChange={() => {
+                setReferenceCheckBox(!referenceCheckBox);
+                onPressCheckbox('reference');
+              }}
             />
           </View>
           <View style={styles.listItem}>
             <Text style={styles.text}>Popularity</Text>
             <CheckBox
               value={popularityCheckBox}
-              onValueChange={setPopularityCheckBox}
+              onValueChange={() => {
+                setPopularityCheckBox(!popularityCheckBox);
+                onPressCheckbox('popularity');
+              }}
             />
           </View>
           <View style={styles.listItem}>
             <Text style={styles.text}>Distance</Text>
             <CheckBox
               value={distanceCheckBox}
-              onValueChange={setDistanceCheckBox}
+              onValueChange={() => {
+                setDistanceCheckBox(!distanceCheckBox);
+                onPressCheckbox('distance');
+              }}
             />
           </View>
         </View>
@@ -55,7 +88,12 @@ const Footer = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={() => navigation.navigate('Filter')}>
+        onPress={() =>
+          navigation.navigate('Filter', {
+            setSearchCategories: setSearchCategories,
+            setSearchAreas: setSearchAreas,
+          })
+        }>
         <Text style={styles.text}>Filter</Text>
       </TouchableOpacity>
     </View>
@@ -76,6 +114,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     width: '50%',
+    height: '100%',
     height: 60,
     display: 'flex',
     alignItems: 'center',

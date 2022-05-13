@@ -16,6 +16,7 @@ import Filter from './screen/Filter';
 import {StoreProvider} from 'easy-peasy';
 import store from './Store/store';
 import Header from './components/Header';
+import Footer from './components/Footer';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -37,6 +38,12 @@ const App = () => {
             options={{headerShown: false}}
             name="Filter"
             component={Filter}
+          />
+
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="Footer"
+            component={Footer}
           />
         </Stack.Navigator>
       </NavigationContainer>

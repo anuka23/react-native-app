@@ -3,10 +3,9 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import CheckBox from '@react-native-community/checkbox';
 
-const Areas = () => {
+const Areas = ({searchUpdatedAreas}) => {
   const [areas, setAreas] = useState([]);
   const [checked, setChecked] = useState([]);
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const getAreas = () => {
     axios
@@ -23,6 +22,31 @@ const Areas = () => {
   useEffect(() => {
     getAreas();
   }, []);
+
+  const onChecked = id => {
+    let temp = areas.map(product => {
+      if (id === product.id) {
+        return {...product, isChecked: !product.isChecked};
+      }
+      return product;
+    });
+    setAreas(temp);
+    console.log('temp', temp);
+  };
+
+  const searchAreas = value => {
+    const currentValue = checked.indexOf(value);
+    const newValue = [...checked];
+
+    if (checked.includes(value)) {
+      newValue.splice(currentValue, 1);
+    } else {
+      newValue.push(value);
+    }
+    setChecked(newValue);
+    searchUpdatedAreas(newValue);
+  };
+
   return (
     <View style={styles.areaContainer}>
       <Text style={styles.areaTitle}>Area</Text>
@@ -32,9 +56,11 @@ const Areas = () => {
           areas.map(item => (
             <TouchableOpacity style={styles.areaListItem} key={item.id}>
               <CheckBox
-                disabled={false}
-                value={toggleCheckBox}
-                onValueChange={newValue => setToggleCheckBox(newValue)}
+                value={item.isChecked}
+                onValueChange={() => {
+                  onChecked(item.id);
+                  searchAreas(item.slug);
+                }}
               />
               <Text style={styles.listItem}>{item.name}</Text>
             </TouchableOpacity>

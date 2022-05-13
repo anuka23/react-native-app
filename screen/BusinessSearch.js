@@ -16,7 +16,6 @@ import cover from '../Image/cover.jpg';
 import LinearGradient from 'react-native-linear-gradient';
 import BusinessList from '../components/BusinessList';
 import Deals from '../components/Deals';
-import {useIsFocused} from '@react-navigation/native';
 
 const BusinessSearch = ({navigation, route}) => {
   const [show, setShow] = useState(true);
@@ -25,6 +24,9 @@ const BusinessSearch = ({navigation, route}) => {
     {
       search_query: '',
       city: '',
+      sort: [''],
+      categories: [],
+      areas: [],
     },
   ]);
 
@@ -37,6 +39,24 @@ const BusinessSearch = ({navigation, route}) => {
   const searchUpdatedCity = value => {
     const updatedValueNew = {...updatedValue};
     updatedValueNew.city = value;
+    setUpdatedValue(updatedValueNew);
+  };
+
+  const sort = value => {
+    const updatedValueNew = {...updatedValue};
+    updatedValueNew.sort = value;
+    setUpdatedValue(updatedValueNew);
+  };
+
+  const updatedCategories = value => {
+    const updatedValueNew = {...updatedValue};
+    updatedValueNew.categories = value;
+    setUpdatedValue(updatedValueNew);
+  };
+
+  const updatedAreas = value => {
+    const updatedValueNew = {...updatedValue};
+    updatedValueNew.areas = value;
     setUpdatedValue(updatedValueNew);
   };
 
@@ -84,7 +104,11 @@ const BusinessSearch = ({navigation, route}) => {
         ) : (
           <Deals updatedValue={updatedValue} />
         )}
-        <Footer />
+        <Footer
+          updatedCategories={updatedCategories}
+          updatedAreas={updatedAreas}
+          sort={sort}
+        />
       </LinearGradient>
     </View>
   );
